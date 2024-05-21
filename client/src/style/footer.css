@@ -1,0 +1,45 @@
+/* footer.css */
+.footer {
+  background-color: #007bff; /* Blue background */
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+  width: 100%; /* Make the footer full-width */
+  position: fixed; /* Position the footer fixed at the bottom */
+  bottom: 0; /* Align the footer to the bottom */
+  transition: visibility 0.3s ease; /* Add smooth transition */
+  z-index: 999; /* Ensure the footer stays on top of other content */
+}
+
+.show-footer {
+  visibility: visible; /* Show the footer when this class is applied */
+}
+
+.footer-content {
+  max-width: 90%; /* Adjust the maximum width for better responsiveness */
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-links {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .footer-content {
+    padding: 0;
+  }
+}

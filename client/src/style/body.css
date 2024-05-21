@@ -1,0 +1,41 @@
+/* Body.css */
+.body {
+    background-color: #ffffff; /* White background */
+    color: #007bff; /* Blue text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  .content {
+    max-width: 800px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
+    .body {
+      padding: 1rem;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  
+    p {
+      font-size: 1rem;
+    }
+  }
+  
