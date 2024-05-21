@@ -1,6 +1,7 @@
 const express=require('express');
 const app=express();
 const fileUpload = require('express-fileupload');
+const cors = require('cors')
 const {dbConnect}=require('./Config/dbConnect');
 const routes=require('./Routes/index');
 
@@ -8,6 +9,7 @@ require('dotenv').config();
 
 // for parsing
 app.use(express.json());
+app.use(cors());
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/'

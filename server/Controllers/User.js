@@ -10,6 +10,12 @@ exports.createUser=async (req,res)=>{
                emailID,
                userDes}=req.body;
         
+        console.log(name);
+        console.log(DOB);
+        console.log(contactNumber);
+        console.log(emailID);
+        console.log(userDes);
+        
         // validate data
         if(!name || !DOB || !contactNumber || !emailID || !userDes){
             return res.status(400).json({
@@ -66,8 +72,9 @@ exports.createUser=async (req,res)=>{
 exports.userDetails=async(req,res)=>{
     try{
         // Extract user ID from request body
-        const {userID}=req.body;
-
+        const {userID}=req.query;
+        // const UserID=_id;
+        // console.log(userID);
         // Validate user ID
         if(!userID)
         {
@@ -106,36 +113,63 @@ exports.userDetails=async(req,res)=>{
 }
 
 
-// Show all users
-exports.showAllUsers=async(req,res)=>{
-    try{
-        // Fetch all users from the database
-        const allUsers=await User.find({});
+// Show all users & pagination 
+exports.showAllUsers = async (req, res) => {
+    try {
+        // Extract page & limit from query parameters
+        const { page, limit } = req.query;
 
-        // Check if there are any users in the database
-        if(allUsers.length==0){
-            return res.status(404).json({
-                success:false,
-                message:"No users found"
-            })
+        let users;
+        let totalPages=1;
+        if (page && limit) {
+            const pageNumber = parseInt(page, 10);
+            const limitNumber = parseInt(limit, 10);
+
+            // Validate pagination parameters
+            if (isNaN(pageNumber) || isNaN(limitNumber) || pageNumber <= 0 || limitNumber <= 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid pagination parameters",
+                });
+            }
+
+            const skip = (pageNumber - 1) * limitNumber;
+            const totalCount = await User.find({}).count();
+            totalPages = Math.ceil(totalCount / 2);
+
+            // Fetch paginated users
+            users = await User.find({}).skip(skip).limit(limitNumber);
+        } else {
+            // Fetch all users
+            users = await User.find({});
         }
 
-        // Return success response with all users
+        // Check if users exist
+        if (users.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No users found",
+                data: [],
+                totalPages
+            });
+        }
+
+        // Return success response with users
         return res.status(200).json({
-            success:true,
-            message:"Fetched all users successfully",
-            data:allUsers
-        })
-    }
-    catch(error){
-        console.error("Error while fetching all users:", error.message);
+            success: true,
+            message: "Users fetched successfully",
+            data: users,
+            totalPages
+        });
+    } catch (error) {
+        console.error("Error while fetching users:", error.message);
         return res.status(500).json({
             success: false,
             message: "An error occurred while fetching users",
             error: error.message,
         });
     }
-}
+};
 
 
 // Update user's details
@@ -149,8 +183,9 @@ exports.updateUser=async(req,res)=>{
             contactNumber,
             emailID,
             userDes,
-            userID}=req.body;
+            _id}=req.body;
      
+        const userID=_id;
         // Validate data
         if(!name || !DOB || !contactNumber || !emailID || !userDes || !userID){
             return res.status(400).json({
@@ -203,7 +238,7 @@ exports.updateUser=async(req,res)=>{
 exports.removeUser = async (req, res) => {
     try {
         // Get user ID from request body
-        const  userID  = req.body.userID;
+        const  {userID}  = req.query;
 
         // Validate user ID
         if (!userID) {
