@@ -25,5 +25,5 @@ app.listen(PORT,()=>{
     console.log("server is listening at port ",PORT);
 })
 
-app.use('/api',routes);
+app.use('https://marbels-health.onrender.com/api',routes);
 dbConnect();
