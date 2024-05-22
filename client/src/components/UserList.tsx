@@ -14,7 +14,7 @@ const UserList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/showAllUsers?page=${currentPage}&limit=${usersPerPage}`);
+        const response = await fetch(`https://marbels-health.onrender.com/api/v1/showAllUsers?page=${currentPage}&limit=${usersPerPage}`);
         const data = await response.json();
         if (data && data.data && Array.isArray(data.data)) {
           setUsers(data.data);

@@ -20,7 +20,7 @@ const UserDetail: React.FC = () => {
   const fetchUser = async () => {
     try {
       //console.log("Fetching user...");
-      const response = await fetch(`http://localhost:8080/api/v1/userDetails?userID=${id}`);
+      const response = await fetch(`https://marbels-health.onrender.com/api/v1/userDetails?userID=${id}`);
       const data = await response.json();
       //console.log(data);
       setUser(data.data);
@@ -46,7 +46,7 @@ const UserDetail: React.FC = () => {
 
   const handleSave = async () => {
     try {
-      await fetch(`http://localhost:8080/api/v1/updateUser`, {
+      await fetch(`https://marbels-health.onrender.com/api/v1/updateUser`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ const UserDetail: React.FC = () => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await fetch(`http://localhost:8080/api/v1/removeUser?userID=${id}`, 
+        await fetch(`https://marbels-health.onrender.com/api/v1/removeUser?userID=${id}`, 
         { method: 'DELETE' });
         navigate('/');
       } catch (error) {
