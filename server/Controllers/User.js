@@ -3,6 +3,7 @@ const User=require('../Models/User');
 //create user
 exports.createUser=async (req,res)=>{
     try{
+        console.log('hello');
         // Extract user details from request body
         const {name,
                DOB,
